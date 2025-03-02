@@ -1,8 +1,10 @@
-import { Controller, Get, Post, Body, Param, Delete, Put, ValidationPipe, ParseIntPipe, HttpStatus, HttpCode, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Patch, Put, ValidationPipe, ParseIntPipe, HttpStatus, HttpCode, Query } from '@nestjs/common';
 import { ProductsService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { Product } from './entity/product.entity';
 import { StockValidationResponseDto } from './dto/stock-validation-response.dto';
+import { ReduceQuantityDto } from './dto/reduce-quantity.dto';
+import { NotFoundException } from '@nestjs/common';
 
 @Controller('products')
 export class ProductsController {
@@ -29,6 +31,22 @@ export class ProductsController {
     @Query('quantity') quantity: number,
   ) {
     return this.productsService.validateStock(id, quantity);
+  }
+
+  @Patch(':id/quantity')
+  reduceQuantity(
+    @Param('id', ParseIntPipe) id: number,
+    @Body(ValidationPipe) reduceQuantityDto: ReduceQuantityDto,
+  ): Promise<Product> {
+    return this.productsService.reduceQuantity(id, reduceQuantityDto.quantity);
+  }
+
+  @Put(':id')
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body(ValidationPipe) createProductDto: CreateProductDto,
+  ): Promise<Product> {
+    return this.productsService.update(id, createProductDto);
   }
 
 }

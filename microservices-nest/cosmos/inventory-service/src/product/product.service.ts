@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Product } from './entity/product.entity';
 import { CreateProductDto } from './dto/create-product.dto';
 import { StockValidationResponseDto } from './dto/stock-validation-response.dto';
+import { BadRequestException } from '@nestjs/common';
 
 @Injectable()
 export class ProductsService {
@@ -39,5 +40,25 @@ export class ProductsService {
     response.available = product.quantity >= quantity;
     
     return response;
+  }
+
+  async update(id: number, createProductDto: CreateProductDto): Promise<Product> {
+    const product = await this.findOne(id);
+    
+    // Update product properties
+    Object.assign(product, createProductDto);
+    
+    return await this.productsRepository.save(product);
+  }
+
+  async reduceQuantity(id: number, quantity: number): Promise<Product> {
+    const product = await this.findOne(id);
+    
+    if (product.quantity < quantity) {
+      throw new BadRequestException(`Insufficient stock for product with ID ${id}`);
+    }
+    
+    product.quantity -= quantity;
+    return await this.productsRepository.save(product);
   }
 }

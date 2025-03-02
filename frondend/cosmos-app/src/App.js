@@ -1,33 +1,32 @@
-import './App.css';
-import { BrowserRouter } from 'react-router-dom';
-import OrderManagement from './components/order-management';
-import { Route } from 'react-router-dom';
-import { Routes } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Orders from './pages/Orders';
+import Customers from './pages/Customers';
+import Products from './pages/Products';
 
-function App() {
+const App = () => {
   return (
-    <div>
-      <BrowserRouter>
-      <div>
-        <nav>
-          <Navigation nav={"Order Management"} url="/order-management" />
-        </nav>
-      </div>
-      <Routes>
-        <Route path="/order-management" element={<OrderManagement/>} ></Route>
-      </Routes>
-    </BrowserRouter>
-    </div> 
-  );
-}
+    <Router>
+      <nav>
+        <h1>Microservices</h1>
+        <div>
+          <Link to="/">Customers</Link>
+          <br/>
+          <Link to="/products">Products</Link>
+          <br/>
+          <Link to="/orders">Orders</Link>
+        </div>
+      </nav>
 
-function Navigation({nav, url}) {
-  return (
-    <li>
-      <Link to={url}>{nav}</Link>
-    </li>
+      <main>
+        <Routes>
+          <Route path="/" element={<Customers />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/orders" element={<Orders />} />
+        </Routes>
+      </main>
+    </Router>
   );
-}
+};
 
 export default App;

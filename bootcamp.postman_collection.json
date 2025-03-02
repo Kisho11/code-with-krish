@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "http://localhost:3000/orders/",
+			"name": "Create orders",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -35,7 +35,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:3000/orders/9",
+			"name": "Patch orders",
 			"request": {
 				"method": "PATCH",
 				"header": [
@@ -71,7 +71,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:3000/orders/",
+			"name": "Get all orders",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -91,7 +91,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:3000/orders/1",
+			"name": "Get order by ID",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -111,7 +111,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:3000/orders/",
+			"name": "Create customer",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -140,7 +140,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:3000/customers/2",
+			"name": "Get all customers",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -160,7 +160,27 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:3000/products/",
+			"name": "Get customer by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/customers/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"customers",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create product",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -189,37 +209,57 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:3000/products/",
+			"name": "Get all products",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/products/1",
+					"raw": "http://localhost:3001/products/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "3001",
 					"path": [
 						"products",
-						"1"
+						""
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:3000/products/1/validate?quantity=50",
+			"name": "Get product by ID",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/products/1/validate?quantity=50",
+					"raw": "http://localhost:3001/products/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "3001",
+					"path": [
+						"products",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get product quantity availability",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/products/1/validate?quantity=50",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
 					"path": [
 						"products",
 						"1",
@@ -230,6 +270,36 @@
 							"key": "quantity",
 							"value": "50"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reduce product",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"quantity\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/products/1/quantity",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"products",
+						"1",
+						"quantity"
 					]
 				}
 			},
