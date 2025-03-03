@@ -1,14 +1,15 @@
-import { IsEnum } from 'class-validator';
+import { IsEnum, IsNotEmpty } from 'class-validator';
 
 export enum OrderStatus {
   PENDING = 'PENDING',
-  CONFIRMED = 'CONFIRMED',
-  CANCELLED = 'CANCELLED',
+  PROCESSING = 'PROCESSING',
   SHIPPED = 'SHIPPED',
   DELIVERED = 'DELIVERED',
+  CANCELLED = 'CANCELLED',
 }
 
 export class UpdateOrderStatus {
+  @IsNotEmpty()
   @IsEnum(OrderStatus)
   status: OrderStatus;
 }
