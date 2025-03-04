@@ -22,12 +22,12 @@ export class LocationService {
       }
     
     async findOne(id: number): Promise<LocationDispatch> {
-    const customer = await this.locationRepository.findOne({ where: { id } });
+    const locationDispath = await this.locationRepository.findOne({ where: { id } });
     
-    if (!customer) {
+    if (!locationDispath) {
         throw new NotFoundException(`Location dispatch ID ${id} not found`);
     }
     
-    return customer;
+    return locationDispath;
     }
 }
