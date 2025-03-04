@@ -3,6 +3,7 @@ import { OrdersModule } from './orders/orders.module';
 import { OrderItem } from './orders/entity/order-item.entity';
 import { Order } from './orders/entity/order.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module';
 
 
 // @Module({
@@ -20,7 +21,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     database : 'cosmos',
     entities: [Order, OrderItem],
     synchronize: true,
-  })],
+  }), AuthModule],
 
 })
 

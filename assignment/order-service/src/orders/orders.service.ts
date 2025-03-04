@@ -16,7 +16,8 @@ import {
   
   @Injectable()
   export class OrdersService {
-    private kafka = new Kafka({brokers: ['localhost:9092']});
+    // private kafka = new Kafka({brokers: ['localhost:9092']});
+    private kafka = new Kafka({brokers: ['3.0.159.213:9092']});
     private readonly producer = this.kafka.producer();
     private readonly consumer = this.kafka.consumer({groupId: 'kishanthan-order-service'});
 
@@ -196,11 +197,12 @@ import {
           const { customerId, items } = JSON.parse(
             message.value.toString(),
           );
-          // console.log('items', items);
+          // Create order with proper enum value
           const order = this.orderRepository.create({
-            customerId,
-            status: 'CONFIRMED',
+            customerId: customerId, // Make sure customerId is typed correctly in Order entity
+            status: OrderStatus.PROCESSING, // Use enum instead of string literal
           });
+          
           const savedOrder = await this.orderRepository.save(order);
           const orderItems = items.map((item) =>
             this.orderItemRepository.create({
@@ -210,15 +212,9 @@ import {
               order: savedOrder,
             }),
           );
-          console.log("----order.inventory.update-----")
+          console.log("----order.inventory.update-----");
           await this.orderItemRepository.save(orderItems);
         },
       });
-  
-      this.producer.send({
-        topic: 'kishanthan.order.confirmed',
-        messages: [{ value: 'Order service is ready to process orders' }],
-      });
-      console.log('--produce-----kishanthan.order.confirmed-------');
-    }
   }
+}
